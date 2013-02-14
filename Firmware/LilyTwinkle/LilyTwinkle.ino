@@ -1,3 +1,10 @@
+// AVRDUDE fuse settings string:
+// avrdude -p t85 -c avrispmkii -B 4 -P usb -U lfuse:w:0xe2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
+// By the time most users see this board, these settings will already 
+//  have been applied. However, when programming from a blank ATTiny, it
+//  is necessary to program the fuse bits to disable the divide-by-8
+//  on the clock frequency.
+
 #define LED0 0
 #define LED1 1
 #define LED2 2
