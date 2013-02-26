@@ -25,20 +25,14 @@
 #define LIMITMIN  125  // LIMITMIN and LIMITMAX are the limits on the brightest the
 #define LIMITMAX  255  //  LED can get.
 
-#define OFFLIMIT  3    // Don't allow more than this many disable cycles (across all
-                       //  LEDs) before an enable occurs.
-
 long delayTime = 50;   // Sets the loop speed, in microseconds.
 long startTime = 0;    // Counter, for tracking loop iterations.
-
-byte offCounter = 0;   // Counter to track number of disable dice rolls allowed
-                       //  before forcing an enable.
 
 byte onTime0 = 0;      // Time an LED should be on before turning off for PWM
 byte onCounter0 = 0;   // How long the LED *has* been on for PWM
 byte limit0 = 255;     // The point at which the LED's onCounter resets to 0
 char dir0 = 1;         // Are we getting brighter (1), or dimmer (-1)?
-byte enable0 = 26;     // Results for the current "dice roll"
+boolean enable0 = true;// Results for the current "dice roll"
 int fadeTimer0 = 10;   // How long should we PWM before increasing onTime?
 int fadeCounter0 = 0;  // How long have we been PWMing since last onTime increase?
 
@@ -46,7 +40,7 @@ byte onTime1 = 0;
 byte onCounter1 = 0;
 byte limit1 = 255;
 char dir1 = 1;
-byte enable1 = 26;
+boolean enable1 = true;
 int fadeTimer1 = 10;
 int fadeCounter1 = 0;
 
@@ -54,7 +48,7 @@ byte onTime2 = 0;
 byte onCounter2 = 0;
 byte limit2 = 255;
 char dir2 = 1;
-byte enable2 = 26;
+boolean enable2 = true;
 int fadeTimer2 = 10;
 int fadeCounter2 = 0;
 
@@ -62,7 +56,7 @@ byte onTime3 = 0;
 byte onCounter3 = 0;
 byte limit3 = 255;
 char dir3 = 1;
-byte enable3 = 26;
+boolean enable3 = true;
 int fadeTimer3 = 10;
 int fadeCounter3 = 0;
 
@@ -95,7 +89,7 @@ void loop()
     // This if/else controls on/off of the LED:
     // enable is an override- some percentage of the time, we don't want the LED
     //  to be on at all; otherwise, the LEDs will be on too much.
-    if (enable0 <= FADEFALSE)      digitalWrite(LED0, LOW);
+    if (!enable0)                   digitalWrite(LED0, LOW);
     // while onCounter < onTime, the LED should be on. This is the short loop,
     //  which effectively PWMs the LED.
     else if (onCounter0 > onTime0) digitalWrite(LED0, LOW);
@@ -131,21 +125,12 @@ void loop()
         //  FADEFALSE/(FADETRUE+1); by default, that's 25/31 or about 80% of the
         //  rolls should be negative. We want to force an enable if more than a
         //  couple of disables have passed.
-        enable0 =    random(0,FADETRUE+1);
-        // Force enable if it's been too long.
-        if (++offCounter >= OFFLIMIT)
-        {
-          enable0 = FADETRUE;
-          offCounter = 0;
-        }
-        // If it *hasn't* been too long, and this LED is disabled this cycle,
-        //  increment the counter for disabled dice rolls.
-        else if (enable0 > FADEFALSE) offCounter = 0;
+        enable0 =  random(0,FADETRUE+1) >= FADEFALSE;
       }
     }
      
   //  LED1 section-----------------------------------------------------------------
-    if (enable1 <= FADEFALSE)      digitalWrite(LED1, LOW);
+    if (!enable1)                   digitalWrite(LED1, LOW);
     else if (onCounter1 > onTime1) digitalWrite(LED1, LOW);
     else                           digitalWrite(LED1, HIGH);
     onCounter1++;
@@ -159,18 +144,12 @@ void loop()
       {
         limit1 =     random(LIMITMIN,LIMITMAX);
         fadeTimer1 = random(FADEMIN,FADEMAX);
-        enable1 =    random(0,FADETRUE+1);
-        if (++offCounter >= OFFLIMIT)
-        {
-          enable1 = FADETRUE;
-          offCounter = 0;
-        }
-        else if (enable1 > FADEFALSE) offCounter = 0;
+        enable1 =    random(0,FADETRUE+1) >= FADEFALSE;
       }
     }
 
   //  LED2 section-----------------------------------------------------------------
-    if (enable2 <= FADEFALSE)      digitalWrite(LED2, LOW);
+    if (!enable2)                   digitalWrite(LED2, LOW);
     else if (onCounter2 > onTime2) digitalWrite(LED2, LOW);
     else                           digitalWrite(LED2, HIGH);
     onCounter2++;
@@ -184,18 +163,12 @@ void loop()
       {
         limit2 =     random(LIMITMIN,LIMITMAX);
         fadeTimer2 = random(FADEMIN,FADEMAX);
-        enable2 =    random(0,FADETRUE+1);
-        if (++offCounter >= OFFLIMIT)
-        {
-          enable2 = FADETRUE;
-          offCounter = 0;
-        }
-        else if (enable2 > FADEFALSE) offCounter= 0;
+        enable2 =    random(0,FADETRUE+1) >= FADEFALSE;
       }
     }
   
   //  LED3 section-----------------------------------------------------------------
-    if (enable3 <= FADEFALSE)      digitalWrite(LED3, LOW);
+    if (!enable3)                   digitalWrite(LED3, LOW);
     else if (onCounter3 > onTime3) digitalWrite(LED3, LOW);
     else                           digitalWrite(LED3, HIGH);
     onCounter3++;
@@ -209,13 +182,7 @@ void loop()
       {
         limit3 =     random(LIMITMIN,LIMITMAX);
         fadeTimer3 = random(FADEMIN,FADEMAX);
-        enable3 =    random(0,FADETRUE+1);
-        if (++offCounter >= OFFLIMIT)
-        {
-          enable3 = FADETRUE;
-          offCounter = 0;
-        }
-        else if (enable3 > FADEFALSE) offCounter = 0;
+        enable3 =    random(0,FADETRUE+1) >= FADEFALSE;
       }
     }
   }
