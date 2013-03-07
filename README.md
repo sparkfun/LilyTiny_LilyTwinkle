@@ -6,7 +6,7 @@ LilyTiny / LilyTwinkle
 
 LilyTiny and LilyTwinkle are ATTiny85-based development boards for eTextiles applications. Due to the small size of the board and hardware limitations of the processor, they do not have a bootloader like a conventional LilyPad Arduino compatible does. Instead, six pads are available in the center of the back side of the board, allowing it to be reprogrammed with a standard AVR ISP programmer simply by inserting male headers into the end of the programming cable and pressing them against the board.
 
-In order to write new for the ATTiny you will need to add support to the Arduino IDE. Please refer to the High-Low Tech group at MIT has a great tutorial on doing this that can be found here: [http://hlt.media.mit.edu/?p=1695](http://hlt.media.mit.edu/?p=1695)
+In order to write new for the ATTiny you will need to add support to the Arduino IDE. Please refer to the High-Low Tech group at MIT for a great tutorial on doing this: [http://hlt.media.mit.edu/?p=1695](http://hlt.media.mit.edu/?p=1695)
 
 Repository Contents
 -------------------
