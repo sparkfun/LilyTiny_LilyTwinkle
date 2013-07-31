@@ -85,6 +85,7 @@
 <layer number="125" name="_tNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="144" name="Drill_legend" color="7" fill="1" visible="no" active="yes"/>
 <layer number="151" name="HeatSink" color="7" fill="1" visible="no" active="yes"/>
+<layer number="199" name="Contour" color="7" fill="1" visible="no" active="yes"/>
 <layer number="200" name="200bmp" color="1" fill="10" visible="no" active="yes"/>
 <layer number="201" name="201bmp" color="2" fill="10" visible="no" active="yes"/>
 <layer number="202" name="202bmp" color="3" fill="10" visible="no" active="yes"/>
@@ -162,7 +163,7 @@
 <text x="-3.6139" y="-8.6263" size="1.016" layer="21" font="vector" ratio="15">0</text>
 <text x="8.4602" y="0.962" size="1.016" layer="21" font="vector" ratio="15">2</text>
 <text x="-9.144" y="-1.651" size="1.016" layer="21" font="vector" ratio="15">-</text>
-<text x="43.18" y="-24.13" size="1.778" layer="27" font="vector" ratio="15">M. HORD</text>
+<text x="40.64" y="-33.02" size="1.27" layer="27" font="vector" ratio="15">M. HORD</text>
 <polygon width="0.2032" layer="29">
 <vertex x="-6" y="0"/>
 <vertex x="-11" y="0"/>
@@ -380,6 +381,8 @@
 <text x="4.064" y="-1.016" size="1.016" layer="22" font="vector" ratio="15" rot="MR90">Tiny</text>
 <rectangle x1="2.54" y1="-2.286" x2="3.429" y2="-1.397" layer="22"/>
 <rectangle x1="4.064" y1="-2.286" x2="4.953" y2="-1.397" layer="22"/>
+<text x="1.143" y="-5.588" size="0.8128" layer="16" font="vector" ratio="25" rot="MR0">v11</text>
+<text x="49.53" y="-33.02" size="1.27" layer="27" font="vector" ratio="15">Revised by Pete Lewis</text>
 </plain>
 <libraries>
 <library name="SparkFun">
@@ -442,11 +445,6 @@
 <rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
 <rectangle x1="-0.2286" y1="-0.381" x2="0.2286" y2="0.381" layer="21"/>
 </package>
-<package name="CREATIVE_COMMONS">
-<text x="-20.32" y="5.08" size="1.778" layer="27">Released under the Creative Commons Attribution Share-Alike 3.0 License</text>
-<text x="0" y="2.54" size="1.778" layer="27">http://creativecommons.org/licenses/by-sa/3.0</text>
-<text x="11.43" y="0" size="1.778" layer="27">Designed by:</text>
-</package>
 <package name="MICRO-FIDUCIAL">
 <smd name="1" x="0" y="0" dx="0.635" dy="0.635" layer="1" roundness="100" cream="no"/>
 </package>
@@ -492,6 +490,57 @@
 <wire x1="-0.8232" y1="-0.3256" x2="-0.7232" y2="-0.3256" width="0.2032" layer="21"/>
 <wire x1="-0.7232" y1="-0.3256" x2="0.0268" y2="-1.0756" width="0.2032" layer="21" curve="-90"/>
 <wire x1="0.0268" y1="-1.0756" x2="0.8768" y2="-1.5756" width="0.2032" layer="21" curve="90"/>
+</package>
+</packages>
+</library>
+<library name="SparkFun-Aesthetics">
+<description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
+In this library you'll find non-functional items- supply symbols, logos, notations, frame blocks, etc.&lt;br&gt;&lt;br&gt;
+We've spent an enormous amount of time creating and checking these footprints and parts, but it is the end user's responsibility to ensure correctness and suitablity for a given componet or application. If you enjoy using this library, please buy one of our products at www.sparkfun.com.
+&lt;br&gt;&lt;br&gt;
+&lt;b&gt;Licensing:&lt;/b&gt; CC v3.0 Share-Alike You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
+<packages>
+<package name="CREATIVE_COMMONS">
+<text x="-20.32" y="5.08" size="1.778" layer="27">Released under the Creative Commons Attribution Share-Alike 3.0 License</text>
+<text x="0" y="2.54" size="1.778" layer="27">http://creativecommons.org/licenses/by-sa/3.0</text>
+<text x="11.43" y="0" size="1.778" layer="27">Designed by:</text>
+</package>
+<package name="OSHW-LOGO-S">
+<polygon width="0.15" layer="21">
+<vertex x="0.3947" y="-0.9528" curve="9.498218"/>
+<vertex x="0.5465" y="-0.8746"/>
+<vertex x="0.9235" y="-1.182"/>
+<vertex x="1.182" y="-0.9235"/>
+<vertex x="0.8746" y="-0.5465" curve="19.000773"/>
+<vertex x="1.0049" y="-0.232"/>
+<vertex x="1.4888" y="-0.1828"/>
+<vertex x="1.4888" y="0.1828"/>
+<vertex x="1.0049" y="0.232" curve="19.000773"/>
+<vertex x="0.8746" y="0.5465"/>
+<vertex x="1.182" y="0.9235"/>
+<vertex x="0.9235" y="1.182"/>
+<vertex x="0.5465" y="0.8746" curve="19.000773"/>
+<vertex x="0.232" y="1.0049"/>
+<vertex x="0.1828" y="1.4888"/>
+<vertex x="-0.1828" y="1.4888"/>
+<vertex x="-0.232" y="1.0049" curve="19.000773"/>
+<vertex x="-0.5465" y="0.8746"/>
+<vertex x="-0.9235" y="1.182"/>
+<vertex x="-1.182" y="0.9235"/>
+<vertex x="-0.8746" y="0.5465" curve="19.000773"/>
+<vertex x="-1.0049" y="0.232"/>
+<vertex x="-1.4888" y="0.1828"/>
+<vertex x="-1.4888" y="-0.1828"/>
+<vertex x="-1.0049" y="-0.232" curve="19.000773"/>
+<vertex x="-0.8746" y="-0.5465"/>
+<vertex x="-1.182" y="-0.9235"/>
+<vertex x="-0.9235" y="-1.182"/>
+<vertex x="-0.5465" y="-0.8746" curve="9.498218"/>
+<vertex x="-0.3947" y="-0.9528"/>
+<vertex x="-0.1794" y="-0.4331" curve="-67.514699"/>
+<vertex x="-0.4688" y="0" curve="-247.473915"/>
+<vertex x="0.1794" y="-0.4331"/>
+</polygon>
 </package>
 </packages>
 </library>
@@ -650,53 +699,54 @@ design rules under a new name.</description>
 </autorouter>
 <elements>
 <element name="U1" library="SparkFun" package="SO08-EIAJ" value="ATTINY85" x="0" y="0" rot="R270"/>
-<element name="C1" library="SparkFun" package="0603-CAP" value="0.1uF" x="0" y="5.08" rot="R180"/>
-<element name="R1" library="SparkFun" package="0603-RES" value="10k" x="0" y="3.81" rot="R180"/>
+<element name="C1" library="SparkFun" package="0603-CAP" value="0.1uF" x="1.778" y="3.81"/>
+<element name="R1" library="SparkFun" package="0603-RES" value="10k" x="-1.778" y="3.81" rot="R180"/>
 <element name="U$2" library="LilyPad-Wearables" package="PETAL-SMALL-2SIDE" value="SEWTAP6" x="-6.4976" y="-3.7514" rot="R300"/>
 <element name="U$3" library="LilyPad-Wearables" package="PETAL-SMALL-2SIDE" value="SEWTAP6" x="6.4962" y="-3.7491" rot="R60"/>
 <element name="U$4" library="LilyPad-Wearables" package="PETAL-SMALL-2SIDE" value="SEWTAP6" x="6.494" y="3.7535" rot="R120"/>
 <element name="U$5" library="LilyPad-Wearables" package="PETAL-SMALL-2SIDE" value="SEWTAP6" x="-6.4975" y="3.7515" rot="R240"/>
 <element name="U$6" library="LilyPad-Wearables" package="PETAL-SMALL-2SIDE" value="SEWTAP6" x="0" y="7.493" rot="R180"/>
 <element name="U$7" library="LilyPad-Wearables" package="PETAL-SMALL-2SIDE" value="SEWTAP6" x="-0.0034" y="-7.502"/>
-<element name="U$1" library="SparkFun" package="CREATIVE_COMMONS" value="CREATIVE_COMMONS" x="11.43" y="-24.13"/>
 <element name="U$8" library="LilyPad-Wearables" package="LOGO-L" value="LOGO-LPL" x="0" y="-4.064"/>
 <element name="JP1" library="SparkFun" package="MICRO-FIDUCIAL" value="FIDUCIALUFIDUCIAL" x="-4.572" y="7.62"/>
 <element name="JP2" library="SparkFun" package="MICRO-FIDUCIAL" value="FIDUCIALUFIDUCIAL" x="3.81" y="-6.35"/>
+<element name="FRAME2" library="SparkFun-Aesthetics" package="CREATIVE_COMMONS" value="FRAME-LETTER" x="10.16" y="-33.02"/>
+<element name="LOGO1" library="SparkFun-Aesthetics" package="OSHW-LOGO-S" value="OSHW-LOGOS" x="-3.81" y="0" rot="MR90"/>
 </elements>
 <signals>
 <signal name="VCC">
 <contactref element="R1" pad="1"/>
 <contactref element="U1" pad="8"/>
 <contactref element="C1" pad="1"/>
-<wire x1="3.3528" y1="2.7432" x2="3.3528" y2="1.905" width="0.254" layer="1"/>
-<wire x1="2.286" y1="3.81" x2="3.3528" y2="2.7432" width="0.254" layer="1"/>
-<wire x1="0.85" y1="3.81" x2="2.286" y2="3.81" width="0.254" layer="1"/>
-<wire x1="0.85" y1="5.08" x2="0.85" y2="3.81" width="0.254" layer="1"/>
 <wire x1="0" y1="2.54" x2="-1.27" y2="2.54" width="0.254" layer="1"/>
 <via x="-1.27" y="2.54" extent="1-16" drill="0.508"/>
 <contactref element="U$5" pad="1"/>
-<wire x1="-1.27" y1="2.54" x2="-0.762" y2="3.048" width="0.254" layer="16"/>
-<wire x1="-0.762" y1="3.048" x2="-0.762" y2="4.572" width="0.254" layer="16"/>
-<wire x1="-0.762" y1="4.572" x2="-1.27" y2="5.08" width="0.254" layer="16"/>
-<wire x1="-1.27" y1="5.08" x2="-2.159" y2="5.08" width="0.254" layer="16"/>
-<wire x1="-2.159" y1="5.08" x2="-3.4875" y2="3.7515" width="0.254" layer="16"/>
-<wire x1="-6.4975" y1="3.7515" x2="-3.4875" y2="3.7515" width="0.254" layer="16"/>
-<wire x1="0" y1="2.54" x2="0.85" y2="3.39" width="0.254" layer="1"/>
-<wire x1="0.85" y1="3.39" x2="0.85" y2="3.81" width="0.254" layer="1"/>
+<wire x1="-0.928" y1="3.81" x2="-0.928" y2="2.882" width="0.254" layer="1"/>
+<wire x1="-0.928" y1="2.882" x2="-1.27" y2="2.54" width="0.254" layer="1"/>
+<wire x1="-6.4975" y1="3.7515" x2="-2.4815" y2="3.7515" width="0.254" layer="16"/>
+<wire x1="-2.4815" y1="3.7515" x2="-1.27" y2="2.54" width="0.254" layer="16"/>
+<wire x1="3.3528" y1="1.905" x2="2.159" y2="1.905" width="0.254" layer="1"/>
+<wire x1="2.159" y1="1.905" x2="1.778" y2="1.524" width="0.254" layer="1"/>
+<wire x1="1.778" y1="1.524" x2="1.016" y2="1.524" width="0.254" layer="1"/>
+<wire x1="1.016" y1="1.524" x2="0" y2="2.54" width="0.254" layer="1"/>
+<wire x1="0" y1="2.54" x2="0.928" y2="3.468" width="0.254" layer="1"/>
+<wire x1="0.928" y1="3.468" x2="0.928" y2="3.81" width="0.254" layer="1"/>
 </signal>
 <signal name="NRESET">
 <contactref element="R1" pad="2"/>
 <contactref element="U1" pad="1"/>
 <via x="1.27" y="-2.54" extent="1-16" drill="0.508"/>
-<via x="-2.286" y="3.429" extent="1-16" drill="0.508"/>
-<wire x1="0" y1="0" x2="0" y2="-1.27" width="0.254" layer="16"/>
-<wire x1="0" y1="-1.27" x2="1.27" y2="-2.54" width="0.254" layer="16"/>
-<wire x1="-0.85" y1="3.81" x2="-1.905" y2="3.81" width="0.254" layer="1"/>
-<wire x1="-1.905" y1="3.81" x2="-2.286" y2="3.429" width="0.254" layer="1"/>
 <wire x1="-3.3782" y1="1.905" x2="-3.3782" y2="2.3368" width="0.254" layer="1"/>
-<wire x1="-3.3782" y1="2.3368" x2="-2.286" y2="3.429" width="0.254" layer="1"/>
-<wire x1="0" y1="0" x2="-2.286" y2="2.286" width="0.254" layer="16"/>
-<wire x1="-2.286" y1="2.286" x2="-2.286" y2="3.429" width="0.254" layer="16"/>
+<wire x1="-3.81" y1="-0.254" x2="-5.334" y2="1.27" width="0.254" layer="16"/>
+<via x="-5.334" y="1.27" extent="1-16" drill="0.508"/>
+<wire x1="-5.334" y1="1.27" x2="-4.699" y2="1.905" width="0.254" layer="1"/>
+<wire x1="-4.699" y1="1.905" x2="-3.3782" y2="1.905" width="0.254" layer="1"/>
+<wire x1="-3.3782" y1="2.3368" x2="-2.628" y2="3.087" width="0.254" layer="1"/>
+<wire x1="-2.628" y1="3.087" x2="-2.628" y2="3.81" width="0.254" layer="1"/>
+<wire x1="1.27" y1="-2.54" x2="0.381" y2="-3.429" width="0.254" layer="16"/>
+<wire x1="0.381" y1="-3.429" x2="-1.905" y2="-3.429" width="0.254" layer="16"/>
+<wire x1="-1.905" y1="-3.429" x2="-3.81" y2="-1.524" width="0.254" layer="16"/>
+<wire x1="-3.81" y1="-1.524" x2="-3.81" y2="-0.254" width="0.254" layer="16"/>
 </signal>
 <signal name="GND">
 <contactref element="C1" pad="2"/>
@@ -715,17 +765,19 @@ design rules under a new name.</description>
 </polygon>
 <via x="-1.27" y="-2.54" extent="1-16" drill="0.508"/>
 <contactref element="U$2" pad="1"/>
+<via x="3.937" y="3.937" extent="1-16" drill="0.508"/>
 </signal>
 <signal name="N$3">
 <contactref element="U1" pad="5"/>
 <contactref element="U$7" pad="1"/>
-<wire x1="-1.27" y1="-0.889" x2="-1.27" y2="0" width="0.254" layer="1"/>
+<wire x1="-1.27" y1="-1.27" x2="-1.27" y2="0" width="0.254" layer="1"/>
 <wire x1="-0.0034" y1="-7.502" x2="-0.0034" y2="-3.81" width="0.254" layer="1"/>
 <wire x1="3.3528" y1="-1.905" x2="3.3528" y2="-2.9972" width="0.254" layer="1"/>
 <wire x1="3.3528" y1="-2.9972" x2="2.54" y2="-3.81" width="0.254" layer="1"/>
 <wire x1="2.54" y1="-3.81" x2="-0.0034" y2="-3.81" width="0.254" layer="1"/>
-<wire x1="-0.0034" y1="-3.81" x2="-0.0034" y2="-2.1556" width="0.254" layer="1"/>
-<wire x1="-0.0034" y1="-2.1556" x2="-1.27" y2="-0.889" width="0.254" layer="1"/>
+<wire x1="-0.0034" y1="-3.81" x2="-0.0034" y2="-2.5366" width="0.254" layer="1"/>
+<wire x1="-0.0034" y1="-2.5366" x2="-1.27" y2="-1.27" width="0.254" layer="1"/>
+<via x="-1.27" y="0" extent="1-16" drill="0.508"/>
 </signal>
 <signal name="N$4">
 <contactref element="U1" pad="6"/>
@@ -734,8 +786,15 @@ design rules under a new name.</description>
 <wire x1="5.715" y1="-0.635" x2="6.4962" y2="-1.4162" width="0.254" layer="1"/>
 <wire x1="6.4962" y1="-3.7491" x2="6.4962" y2="-1.4162" width="0.254" layer="1"/>
 <wire x1="6.4962" y1="-3.7491" x2="6.2891" y2="-3.7491" width="0.254" layer="16"/>
-<wire x1="6.2891" y1="-3.7491" x2="5.08" y2="-2.54" width="0.254" layer="16"/>
-<wire x1="5.08" y1="-2.54" x2="5.08" y2="0" width="0.254" layer="16"/>
+<via x="1.27" y="2.54" extent="1-16" drill="0.508"/>
+<via x="0" y="-1.27" extent="1-16" drill="0.508"/>
+<wire x1="3.3528" y1="-0.635" x2="2.032" y2="-0.635" width="0.254" layer="1"/>
+<wire x1="2.032" y1="-0.635" x2="1.651" y2="-1.016" width="0.254" layer="1"/>
+<wire x1="1.651" y1="-1.016" x2="0.254" y2="-1.016" width="0.254" layer="1"/>
+<wire x1="0.254" y1="-1.016" x2="0" y2="-1.27" width="0.254" layer="1"/>
+<wire x1="1.27" y1="2.54" x2="1.27" y2="1.27" width="0.254" layer="16"/>
+<wire x1="1.27" y1="1.27" x2="0" y2="0" width="0.254" layer="16"/>
+<wire x1="0" y1="0" x2="0" y2="-1.27" width="0.254" layer="16"/>
 </signal>
 <signal name="N$5">
 <contactref element="U1" pad="7"/>
@@ -745,6 +804,7 @@ design rules under a new name.</description>
 <wire x1="3.3528" y1="0.635" x2="5.715" y2="0.635" width="0.254" layer="1"/>
 <wire x1="5.715" y1="0.635" x2="6.494" y2="1.414" width="0.254" layer="1"/>
 <wire x1="6.494" y1="3.7535" x2="6.494" y2="1.414" width="0.254" layer="1"/>
+<via x="1.27" y="0" extent="1-16" drill="0.508"/>
 </signal>
 <signal name="N$6">
 <contactref element="U1" pad="2"/>
@@ -754,17 +814,6 @@ design rules under a new name.</description>
 <wire x1="-1.27" y1="1.27" x2="0" y2="1.27" width="0.254" layer="1"/>
 <via x="0" y="1.27" extent="1-16" drill="0.508"/>
 <wire x1="0" y1="7.493" x2="0" y2="1.27" width="0.254" layer="16"/>
-</signal>
-<signal name="N$7">
-<via x="-1.27" y="0" extent="1-16" drill="0.508"/>
-</signal>
-<signal name="N$8">
-<via x="1.27" y="0" extent="1-16" drill="0.508"/>
-</signal>
-<signal name="N$9">
-<via x="1.27" y="2.54" extent="1-16" drill="0.508"/>
-<wire x1="1.27" y1="2.54" x2="2.54" y2="2.54" width="0.254" layer="16"/>
-<wire x1="2.54" y1="2.54" x2="5.08" y2="0" width="0.254" layer="16"/>
 </signal>
 <signal name="N$1">
 </signal>
