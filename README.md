@@ -11,8 +11,10 @@ In order to write new code for the ATtiny you will need to add support to the Ar
 Repository Contents
 -------------------
 
-* **/Hardware** - All hardware files for both the LilyTiny *and* the LilyTwinkle (they are identical boards). For simplicity's sake, the hardware files are named *LilyTiny*.
 * **/Firmware** - Separate firmware files for the LilyTiny and the LilyTwinkle.
+* **/Fritzing** - Fritzing Example wiring images
+* **/Hardware** - All hardware files for both the LilyTiny *and* the LilyTwinkle (they are identical boards). For simplicity's sake, the hardware files are named *LilyTiny*.
+* **/Production** - Test bed files and production panel files
 
 License Information
 -------------------
