@@ -22,7 +22,7 @@ Documentation
 * Getting Started Tutorials
   * **[LDK Experiment 6: Microcontroller Circuits](https://learn.sparkfun.com/tutorials/ldk-experiment-6-microcontroller-circuits)**
   * **[Using the LilyPad LilyTwinkle board](https://www.sparkfun.com/tutorials/390)**
-* Project tutorials
+* Project Tutorials
   * **[Twinkle Zodiac Constellation](https://learn.sparkfun.com/tutorials/twinkle-zodiac-constellation)**
   * **[Night Sky Halloween Costume](https://learn.sparkfun.com/tutorials/night-sky-halloween-costume)**
   * **[Firefly Jar Assembly Guide](https://learn.sparkfun.com/tutorials/firefly-jar-assembly-guide)** 
