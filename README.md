@@ -16,6 +16,24 @@ Repository Contents
 * **/Hardware** - All hardware files for both the LilyTiny *and* the LilyTwinkle (they are identical boards). For simplicity's sake, the hardware files are named *LilyTiny*.
 * **/Production** - Test bed files and production panel files
 
+Documentation
+--------------
+
+* **[LDK Experiment 6: Microcontroller Circuits](https://learn.sparkfun.com/tutorials/ldk-experiment-6-microcontroller-circuits)**
+* **[Using the LilyPad LilyTwinkle board](https://www.sparkfun.com/tutorials/390)** - Getting started tutorial
+* Project tutorials
+  * **[Twinkle Zodiac Constellation](https://learn.sparkfun.com/tutorials/twinkle-zodiac-constellation)**
+  * **[Night Sky Halloween Costume](https://learn.sparkfun.com/tutorials/night-sky-halloween-costume)**
+  * **[Firefly Jar Assembly Guide](https://learn.sparkfun.com/tutorials/firefly-jar-assembly-guide)** 
+  * **[Soft Circuits: LED Feelings Pizza](https://learn.sparkfun.com/tutorials/soft-circuits-led-feelings-pizza)**
+  * **[Twinkling Trick or Treat Bag](https://learn.sparkfun.com/tutorials/twinkling-trick-or-treat-bag)**
+  * **[Light Up Pennant with E-Textiles](https://learn.sparkfun.com/tutorials/light-up-pennant-with-e-textiles)**
+  * **[LilyTiny Plush Monster](https://learn.sparkfun.com/tutorials/lilytiny-plush-monster)**
+  * **[Twinkling Fairy Wings](https://www.sparkfun.com/tutorials/396)**
+* **[Tiny AVR Programmer Hookup Guide](https://learn.sparkfun.com/tutorials/tiny-avr-programmer-hookup-guide)** - Hookup guide to reprogram an ATtiny85.
+* **[Re-Programming the LilyTiny / LilyTwinkle](https://learn.sparkfun.com/tutorials/re-programming-the-lilytiny--lilytwinkle)** - Tutorial to reprogram the LilyTiny or LilyTwinkle.
+* **[Quick Reference Guide for ATTiny85](https://learn.sparkfun.com/resources/96)** 
+
 License Information
 -------------------
 The hardware is released under [Creative Commons ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
