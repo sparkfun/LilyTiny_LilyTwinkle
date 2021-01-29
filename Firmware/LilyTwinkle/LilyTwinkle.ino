@@ -135,7 +135,7 @@ void twinkleLED (int LED, byte onTime, byte onCounter, byte limit, char dir, boo
 
       // enable is a sort of dice-roll for whether the LED will be on or not for
       //  the next cycle it runs through. The probability runs something like
-      //  FADEFALSE/(FADETRUE+1); by default, that's 25/31 or about 80% of the
+      //  FADEFALSE/(FADETRUE+1); by default, that's (1+25)/(1+30)=25/31=83.87% or about 80% of the
       //  rolls should be negative. We want to force an enable if more than a
       //  couple of disables have passed.
       enable =  random(0,FADETRUE+1) >= FADEFALSE;
