@@ -9,12 +9,18 @@
 #define LED1 1
 #define LED2 2
 #define LED3 3
+#define LED4 4
 
 #define FADEMIN   50   // FADEMIN and FADEMAX control the rate of fading. The wider
 #define FADEMAX   55   //  the spread here, the greater the difference between
                        //  fastest fade and slowest fade. FADEMIN sets the lower
                        //  limit; the smaller that number gets, the faster the fade
                        //  will be allowed to be. 
+#define FADEMINFAST 10 // Alternative "fast-mode" fade rate. Should be fast!
+#define FADEMAXFAST 20
+#define FADEMIN0   150  // LED0 gets a different fade rate than everyone else.
+#define FADEMAX0   355   
+
 #define FADEFALSE 25   // FADEFALSE and FADETRUE are a sort of dice-roll to decide
 #define FADETRUE  30   //  whether an LED will be on for this cycle or not. Every
                        //  time an LED hits zero brightness, a random number between
@@ -22,11 +28,46 @@
                        //  than FADEFALSE, the LED will go through a twinkle cycle.
                        //  If it's less than FADEFALSE, the code will still run as
                        //  though a twinkle is occuring, but the LED won't come on.
+#define FADEFALSEFAST 7   // Fast mode-dice rolls. Should make more bright :D
+#define FADETRUEFAST  30   //  
+
+#define FADEFALSE0  5   // LED-specific fade rates.
+#define FADETRUE0   30
+#define FADEFALSE4 95
+#define FADETRUE4 100
+
 #define LIMITMIN  125  // LIMITMIN and LIMITMAX are the limits on the brightest the
 #define LIMITMAX  255  //  LED can get.
 
+// Restricting LED groups 0 and 1 to a minimum 90% PWM duty cycle ensurs that
+// the NOT gate LEDs actually turn off during the fade loop.
+#define LIMITMIN0 230    // LED 0 brightness limit
+#define LIMITMAX0 255
+#define LIMITMIN1 230    // LED 1 brightness limit
+#define LIMITMAX1 255
+
+// Number of cycles to hold at LIMITMAX before reversing.
+#define FADEHOLDMAX0 50
+
+// Variables for debugging
+boolean debugLEDState = false;  // keep track of LED 4 so we can toggle it on and off with PWM.
+//
+
+// Variables for fade cycle counter. Allows an event to trigger after x fade cycles
+int countLED1sFadeCycles = 0;
+//
+
+// Fast mode variables. Initialize frequency and duration dynamic variables from constants.
+// Can be changed on a trigger.
+int fadeFalseDynamic = FADEFALSE;
+int fadeTrueDynamic = FADETRUE;
+int fadeMinDynamic = FADEMIN;
+int fadeMaxDynamic = FADEMAX;
+//
+
 long delayTime = 50;   // Sets the loop speed, in microseconds.
 long startTime = 0;    // Counter, for tracking loop iterations.
+
 
 byte onTime0 = 0;      // Time an LED should be on before turning off for PWM
 byte onCounter0 = 0;   // How long the LED *has* been on for PWM
@@ -35,6 +76,7 @@ char dir0 = 1;         // Are we getting brighter (1), or dimmer (-1)?
 boolean enable0 = true;// Results for the current "dice roll"
 int fadeTimer0 = 10;   // How long should we PWM before increasing onTime?
 int fadeCounter0 = 0;  // How long have we been PWMing since last onTime increase?
+byte fadehold0 = 0;    // How long have we held at fade limit?
 
 byte onTime1 = 0;
 byte onCounter1 = 0;
@@ -60,12 +102,22 @@ boolean enable3 = true;
 int fadeTimer3 = 10;
 int fadeCounter3 = 0;
 
+byte onTime4 = 0;
+byte onCounter4 = 0;
+byte limit4 = 255;
+char dir4 = 1;
+boolean enable4 = true;
+int fadeTimer4 = 10;
+int fadeCounter4 = 0;
+
+
 void setup()  { 
   randomSeed(analogRead(3));
   pinMode(LED0, OUTPUT);
   pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
   pinMode(LED3, OUTPUT);
+  pinMode(LED4, OUTPUT);
   startTime = micros();
 } 
 
@@ -77,21 +129,10 @@ void loop()
   if ( (currTime - startTime) > delayTime)
   {
     startTime = currTime;   // Record the last time we entered the loop.
+    
   //  LED0 section-----------------------------------------------------------------
-  //  Each of the four LEDx sections is exactly like the others, so I'll only
-  //   comment the first one. The idea is pretty simple: on each pass through the
-  //   loop, we increment two counters for each LED. One of them, onCounter, tracks
-  //   whether the LED is on or off for PWM purposes. The other, fadeCounter, tracks
-  //   wether it's time to increase (or decrease) the amount of time the LED will
-  //   remain on for the next cycle, thereby increasing (or decreasing) the LEDs
-  //   apparent brightness.
-  
-    // This if/else controls on/off of the LED:
-    // enable is an override- some percentage of the time, we don't want the LED
-    //  to be on at all; otherwise, the LEDs will be on too much.
-    if (!enable0)                   digitalWrite(LED0, LOW);
-    // while onCounter < onTime, the LED should be on. This is the short loop,
-    //  which effectively PWMs the LED.
+    if (!enable0)                  digitalWrite(LED0, LOW);
+
     else if (onCounter0 > onTime0) digitalWrite(LED0, LOW);
     else                           digitalWrite(LED0, HIGH);
     onCounter0++;    // Advance the PWM counter. The number of times we loiter on
@@ -108,43 +149,101 @@ void loop()
       onTime0 += dir0;   // Increase or decrease onTime, depending on whether we're
                          //  increasing or decreasing brightness.
       
-      // Change from increasing brightness to decreasing brightness, or vice versa.
+
       if ((onTime0 == limit0) || (onTime0 == 0)) dir0 *= -1;
-      // When we hit bottom, but before we start counting back up, randomize our
-      //  variables for the next time around.
+
       if ((onTime0 == 0) && (dir0 = 1))
       {
-        // limit is the point at which the LED stops getting brighter and starts to
-        //  dim again.
-        limit0 =     random(LIMITMIN,LIMITMAX);
-        // fadeTimer controls how fast the fading occurs. The lower it is, the
-        //  faster the fade. FADEMIN and FADEMAX are set to a nice value.
-        fadeTimer0 = random(FADEMIN,FADEMAX);
-        // enable is a sort of dice-roll for whether the LED will be on or not for
-        //  the next cycle it runs through. The probability runs something like
-        //  FADEFALSE/(FADETRUE+1); by default, that's 25/31 or about 80% of the
-        //  rolls should be negative. We want to force an enable if more than a
-        //  couple of disables have passed.
-        enable0 =  random(0,FADETRUE+1) >= FADEFALSE;
+
+
+        //fadehold0 = 0;
+        limit0 =     random(LIMITMIN0,LIMITMAX0);
+
+        fadeTimer0 = random(FADEMIN0,FADEMAX0);
+
+        enable0 =  random(0,FADETRUE0+1) >= FADEFALSE0;
       }
     }
      
   //  LED1 section-----------------------------------------------------------------
-    if (!enable1)                   digitalWrite(LED1, LOW);
-    else if (onCounter1 > onTime1) digitalWrite(LED1, LOW);
-    else                           digitalWrite(LED1, HIGH);
+    if (!enable1) {
+      digitalWrite(LED1, LOW);
+    }
+    else if (onCounter1 > onTime1) {
+      digitalWrite(LED1, LOW);
+    }
+
+    // true many times a fade. Not sure if also false?
+    else {
+      digitalWrite(LED1, HIGH);
+
+      // This LED makes a flickering that's really cute. Also, the LED lands randomly on or off at the end.
+      // Debug LED
+      if (debugLEDState) {
+        digitalWrite(LED4, LOW);
+        debugLEDState = false;
+      } else {
+        digitalWrite(LED4, HIGH);
+        debugLEDState = true;
+      } 
+    }
+
     onCounter1++;
     fadeCounter1++;
+
     if (fadeCounter1 == fadeTimer1)
     {
       fadeCounter1 = 0;
       onTime1 += dir1;
-      if ((onTime1 == limit1) || (onTime1 == 0)) dir1 *= -1;
+
+      // Routine plays with any change in fade direction
+      if ((onTime1 == limit1) || (onTime1 == 0)) { 
+        dir1 *= -1;
+      }
+
+      // This conditional is true many times when the LED is off.
       if ((onTime1 == 0) && (dir1 = 1))
       {
-        limit1 =     random(LIMITMIN,LIMITMAX);
-        fadeTimer1 = random(FADEMIN,FADEMAX);
-        enable1 =    random(0,FADETRUE+1) >= FADEFALSE;
+
+        // True at the very end of a full fade-cycle for an LED
+        if (enable1) {
+          // do magic.
+
+          // Everyone celebrates the majesty of LED1's fade just past~!
+          //enable0 = true;      
+          // enable1 = true;
+          // enable2 = true;      
+          // enable3 = true;
+          // enable4 = true;
+
+          countLED1sFadeCycles++;  // count the number of completed fades.
+
+          if (countLED1sFadeCycles == 3) {
+            // ON THE THIRD FADE
+            // Give everyone coffee!!!!!!!!!!!!!!!!!!!!!!!
+            fadeTrueDynamic = FADETRUEFAST;
+            fadeFalseDynamic = FADEFALSEFAST;
+            fadeMinDynamic = FADEMINFAST;
+            fadeMaxDynamic = FADEMAXFAST;
+          }
+          if (countLED1sFadeCycles == 11) {
+            // Uh oh coffee has worn off eveyrone is sleepy.
+            fadeTrueDynamic = FADETRUE;
+            fadeFalseDynamic = FADEFALSE;
+            fadeMinDynamic = FADEMIN;
+            fadeMaxDynamic = FADEMAX;
+            countLED1sFadeCycles = 0;
+          }
+        } 
+
+
+        limit1 =     random(LIMITMIN1,LIMITMAX1);
+        // fadeTimer1 = random(FADEMIN,FADEMAX);
+        // enable1 =    random(0,FADETRUE+1) >= FADEFALSE;
+        fadeTimer1 = random(fadeMinDynamic,fadeMaxDynamic);
+        enable1 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+
+
       }
     }
 
@@ -162,8 +261,10 @@ void loop()
       if ((onTime2 == 0) && (dir2 = 1))
       {
         limit2 =     random(LIMITMIN,LIMITMAX);
-        fadeTimer2 = random(FADEMIN,FADEMAX);
-        enable2 =    random(0,FADETRUE+1) >= FADEFALSE;
+        // fadeTimer2 = random(FADEMIN,FADEMAX);
+        // enable2 =    random(0,FADETRUE+1) >= FADEFALSE;
+        fadeTimer2 = random(fadeMinDynamic,fadeMaxDynamic);
+        enable3 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
       }
     }
   
@@ -181,9 +282,31 @@ void loop()
       if ((onTime3 == 0) && (dir3 = 1))
       {
         limit3 =     random(LIMITMIN,LIMITMAX);
-        fadeTimer3 = random(FADEMIN,FADEMAX);
-        enable3 =    random(0,FADETRUE+1) >= FADEFALSE;
+        // fadeTimer3 = random(FADEMIN,FADEMAX);
+        // enable3 =    random(0,FADETRUE+1) >= FADEFALSE;
+        fadeTimer3 = random(fadeMinDynamic,fadeMaxDynamic);
+        enable3 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+
       }
     }
+
+   //LED4 section-----------------------------------------------------------------
+    // if (!enable4)                   digitalWrite(LED4, LOW);
+    // else if (onCounter4 > onTime4) digitalWrite(LED4, LOW);
+    // else                           digitalWrite(LED4, HIGH);
+    // onCounter4++;
+    // fadeCounter4++;
+    // if (fadeCounter4 == fadeTimer4)
+    // {
+    //   fadeCounter4 = 0;
+    //   onTime4 += dir4;
+    //   if ((onTime4 == limit4) || (onTime4 == 0)) dir4 *= -1;
+    //   if ((onTime4 == 0) && (dir4 = 1))
+    //   {
+    //     limit4 =     random(LIMITMIN,LIMITMAX);
+    //     fadeTimer4 = random(FADEMIN,FADEMAX);
+    //     enable4 = false;
+    //   }
+    // }
   }
 }
