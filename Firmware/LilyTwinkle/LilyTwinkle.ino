@@ -124,8 +124,6 @@ void setup()  {
 void loop()
 { 
   long currTime = micros();
-  // This is a software PWM thing. We invoke this loop every 50us, at the fastest,
-  //  although it may happen less often than that.
   if ( (currTime - startTime) > delayTime)
   {
     startTime = currTime;   // Record the last time we entered the loop.
@@ -135,32 +133,19 @@ void loop()
 
     else if (onCounter0 > onTime0) digitalWrite(LED0, LOW);
     else                           digitalWrite(LED0, HIGH);
-    onCounter0++;    // Advance the PWM counter. The number of times we loiter on
-                     //  a single brightness value before increasing or decreasing
-                     //  it is determined by the fadeCounter/fadeTimer relationship
-    fadeCounter0++;  // Advance the fade counter. This value controls the rate at
-                     //  which the fade occurs- the higher the value of fadeTimer,
-                     //  the slower the twinkle. After each fade cycle, we pick a
-                     //  new, random-ish value for fadeTimer, with limits set by
-                     //  FADEMIN and FADEMAX above.
+    onCounter0++; 
+    fadeCounter0++;
     if (fadeCounter0 == fadeTimer0)
     {
-      fadeCounter0 = 0;  // Reset the fade counter for the next fade cycle.
-      onTime0 += dir0;   // Increase or decrease onTime, depending on whether we're
-                         //  increasing or decreasing brightness.
+      fadeCounter0 = 0;
+      onTime0 += dir0;
       
-
       if ((onTime0 == limit0) || (onTime0 == 0)) dir0 *= -1;
 
       if ((onTime0 == 0) && (dir0 = 1))
       {
-
-
-        //fadehold0 = 0;
         limit0 =     random(LIMITMIN0,LIMITMAX0);
-
         fadeTimer0 = random(FADEMIN0,FADEMAX0);
-
         enable0 =  random(0,FADETRUE0+1) >= FADEFALSE0;
       }
     }
@@ -173,19 +158,9 @@ void loop()
       digitalWrite(LED1, LOW);
     }
 
-    // true many times a fade. Not sure if also false?
+    // true + false many times a fade cycle. This is the PWM part.
     else {
       digitalWrite(LED1, HIGH);
-
-      // This LED makes a flickering that's really cute. Also, the LED lands randomly on or off at the end.
-      // Debug LED
-      if (debugLEDState) {
-        digitalWrite(LED4, LOW);
-        debugLEDState = false;
-      } else {
-        digitalWrite(LED4, HIGH);
-        debugLEDState = true;
-      } 
     }
 
     onCounter1++;
@@ -196,16 +171,17 @@ void loop()
       fadeCounter1 = 0;
       onTime1 += dir1;
 
-      // Routine plays with any change in fade direction
+      // Identifies any change in fade direction
       if ((onTime1 == limit1) || (onTime1 == 0)) { 
         dir1 *= -1;
       }
 
       // This conditional is true many times when the LED is off.
+      // The whole routine runs even if the LED is not enabled.
       if ((onTime1 == 0) && (dir1 = 1))
       {
 
-        // True at the very end of a full fade-cycle for an LED
+        // True only at the very end of a full fade-cycle for an LED
         if (enable1) {
           // do magic.
 
@@ -236,13 +212,9 @@ void loop()
           }
         } 
 
-
         limit1 =     random(LIMITMIN1,LIMITMAX1);
-        // fadeTimer1 = random(FADEMIN,FADEMAX);
-        // enable1 =    random(0,FADETRUE+1) >= FADEFALSE;
         fadeTimer1 = random(fadeMinDynamic,fadeMaxDynamic);
         enable1 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
-
 
       }
     }
@@ -261,9 +233,7 @@ void loop()
       if ((onTime2 == 0) && (dir2 = 1))
       {
         limit2 =     random(LIMITMIN,LIMITMAX);
-        // fadeTimer2 = random(FADEMIN,FADEMAX);
-        // enable2 =    random(0,FADETRUE+1) >= FADEFALSE;
-        fadeTimer2 = random(fadeMinDynamic,fadeMaxDynamic);
+        fadeTimer2 = random(fadeMinDynamic,fadeMaxDynamic);           // Dynamic fade allows for coffee mode.
         enable3 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
       }
     }
@@ -282,9 +252,7 @@ void loop()
       if ((onTime3 == 0) && (dir3 = 1))
       {
         limit3 =     random(LIMITMIN,LIMITMAX);
-        // fadeTimer3 = random(FADEMIN,FADEMAX);
-        // enable3 =    random(0,FADETRUE+1) >= FADEFALSE;
-        fadeTimer3 = random(fadeMinDynamic,fadeMaxDynamic);
+        fadeTimer3 = random(fadeMinDynamic,fadeMaxDynamic);           // Dynamic fade allows for coffee mode.
         enable3 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
 
       }
