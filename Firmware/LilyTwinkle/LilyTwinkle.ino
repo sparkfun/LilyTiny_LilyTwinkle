@@ -188,7 +188,7 @@ void loop()
       fadeCounter0 = 0;
       onTime[0] += dir0;
       
-      if ((onTime[0] == limit0) || (onTime0 == 0)) dir0 *= -1;
+      if ((onTime[0] == limit0) || (onTime[0] == 0)) dir0 *= -1;
       if ((onTime[0] == 0) && (dir0 = 1))
       {
         limit0 =     random(LIMITMIN0,LIMITMAX0); // pin-specific brightness values
