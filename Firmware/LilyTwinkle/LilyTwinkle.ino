@@ -150,7 +150,7 @@ void loop()
           celebrate = false;
           celebrationRoll = 500; // Next celebration in 500 cycles
         }
-        
+
         if (waitingToCelebrate) {
           enable[0] = false;
         }
@@ -160,7 +160,7 @@ void loop()
         else {
           // As long as we're not waiting to celebrate,
           // and it's not fast mode,
-          // then roll another dice.
+          // then roll another die.
           enable[0] =  random(0,fadeTrueDynamic0+1) >= fadeFalseDynamic0;
         }
       }
@@ -197,11 +197,12 @@ void loop()
         // Only triggers at the end of a full fade cycle when the LED was on.
         if (enable[1]) {
 
-          // If we're celebrating then don't bother drinking any coffee.
+          // Only increment the fast mode counter if celebration-mode flags are false
           if ((!celebrate) && (!waitingToCelebrate)) {
             pin1FadeCycleCompletionCount++;
+          }
 
-            if (pin1FadeCycleCompletionCount == fastModeCycleCountTrigger) {
+          if (pin1FadeCycleCompletionCount == fastModeCycleCountTrigger) {
             // ON THE nth FADE
             // Give everyone coffee!!!!!!!!!!!!!!!!!!!!!!!
             fadeTrueDynamic = FADETRUEFAST;
@@ -215,30 +216,31 @@ void loop()
             fadeTimer[0] = random(fadeMinDynamic,fadeMaxDynamic); // Hijack LED0's fade timer just in case it's
                           // in the middle of a really long fade. Replace it with something short. That way it
                           // will coffee too!!!!
-            enable[0] = true;
-            enable[1] = true;
-            enable[2] = true;
-            enable[3] = true;
-            enable[4] = true;
-            }
-            if (pin1FadeCycleCompletionCount == 11) {
-              // Uh oh coffee has worn off eveyrone is sleepy.
-              fadeTrueDynamic = FADETRUE;
-              fadeFalseDynamic = FADEFALSE;
-              fadeMinDynamic = FADEMIN;
-              fadeMaxDynamic = FADEMAX;
-              fadeMinDynamic0 = FADEMIN0; // pin-specific dynamic fade speed variable
-              fadeMaxDynamic0 = FADEMAX0;
-              pin1FadeCycleCompletionCount = 0;
-              fastModeCycleCountTrigger = random(FASTMODECYCLETRIGGERMIN, FASTMODECYCLETRIGGERMAX); // After how many loops will fast mode trigger again?
+            byte i;
+            for (i = 0; i < numberOfLEDs; i++) {
+              enable[i] = true; // turn every LED on.
             }
           }
+
+          if (pin1FadeCycleCompletionCount == 11) {
+            // Uh oh coffee has worn off eveyrone is sleepy.
+            fadeTrueDynamic = FADETRUE;
+            fadeFalseDynamic = FADEFALSE;
+            fadeMinDynamic = FADEMIN;
+            fadeMaxDynamic = FADEMAX;
+            fadeMinDynamic0 = FADEMIN0; // pin-specific dynamic fade speed variable
+            fadeMaxDynamic0 = FADEMAX0;
+            pin1FadeCycleCompletionCount = 0;
+            fastModeCycleCountTrigger = random(FASTMODECYCLETRIGGERMIN, FASTMODECYCLETRIGGERMAX); // How many LED1 fade cycles until fast mode again?
+          }
+          
         }
+
         // After every fade cycle, increment celebration dice roll
         celebrationRoll++;
         // Now we celebrate
         if (celebrationRoll == 25) {
-          waitingToCelebrate = true; // Inform everyone to gather for the celebration!
+          waitingToCelebrate = true; // Inform everyone it's time to gather for the celebration!
         }
       }
     }
