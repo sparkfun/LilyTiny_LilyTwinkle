@@ -16,12 +16,12 @@
 #define LED3 3
 #define LED4 7
 
-#define FADEMIN   50   
-#define FADEMAX   55  
-#define FADEFALSE 25  
-#define FADETRUE  30  
+#define FADEMIN   50
+#define FADEMAX   55
+#define FADEFALSE 25
+#define FADETRUE  30
 #define LIMITMIN  125
-#define LIMITMAX  255  
+#define LIMITMAX  255
 
 // Restricting LED groups 0 and 1 to a minimum 90% PWM duty cycle ensurs that
 // the NOT gate LEDs actually turn off during the fade loop.
@@ -34,13 +34,13 @@
 #define FADEMIN0   150  // LED0 gets a different fade rate than everyone else.
 #define FADEMAX0   355 
 #define FADEFALSE0   10  // LED0 rolls enable more often
-#define FADETRUE0    30  
+#define FADETRUE0    30
 
 // Fast mode stuff -------------------------------------
 #define FADEMINFAST 20 // Alternative "fast-mode" fade rate. Should be fast!
 #define FADEMAXFAST 30
 #define FADEFALSEFAST 15   // Fast mode-dice rolls. Should make more bright :D
-#define FADETRUEFAST  30    
+#define FADETRUEFAST  30
 
 #define FASTMODECYCLETRIGGERMIN 3   //  Used in a random number generator. Minimum fade cycles until next fast mode
 #define FASTMODECYCLETRIGGERMAX 20  // Maximum fade cycles until next random fast mode
@@ -66,15 +66,15 @@ int fastModeCycleCountTrigger = random(3,5); // Make sure fast mode triggers qui
 int pin1FadeCycleCompletionCount = 0;
 
 long delayTime = 50; 
-long startTime = 0;  
+long startTime = 0;
 
-byte onTime0 = 0;    
+byte onTime0 = 0;
 byte onCounter0 = 0; 
-byte limit0 = 255;   
-char dir0 = 1;        
+byte limit0 = 255;
+char dir0 = 1;
 boolean enable0 = true;
-int fadeTimer0 = 10;   
-int fadeCounter0 = 0; 
+int fadeTimer0 = 10;
+int fadeCounter0 = 0;
 
 byte onTime1 = 0;
 byte onCounter1 = 0;
@@ -124,25 +124,25 @@ void loop()
 
   if ( (currTime - startTime) > delayTime)
   {
-    startTime = currTime;   
-
+    startTime = currTime;
     if (!enable0)                   digitalWrite(LED0, LOW);
-
     else if (onCounter0 > onTime0) digitalWrite(LED0, LOW);
     else                           digitalWrite(LED0, HIGH);
-    onCounter0++;    
-    fadeCounter0++;  
+
+    onCounter0++;
+    fadeCounter0++;
+
     if (fadeCounter0 == fadeTimer0)
     {
-      fadeCounter0 = 0;  
-      onTime0 += dir0;   
+      fadeCounter0 = 0;
+      onTime0 += dir0;
       
       if ((onTime0 == limit0) || (onTime0 == 0)) dir0 *= -1;
       if ((onTime0 == 0) && (dir0 = 1))
       {
-        limit0 =     random(LIMITMIN0,LIMITMAX0);   // pin-specific brightness values
+        limit0 =     random(LIMITMIN0,LIMITMAX0); // pin-specific brightness values
         fadeTimer0 = random(fadeMinDynamic0,fadeMaxDynamic0); // pin specific dynamic-fade speed variables
-        enable0 =  random(0,fadeTrueDynamic0+1) >= fadeFalseDynamic0;  
+        enable0 =  random(0,fadeTrueDynamic0+1) >= fadeFalseDynamic0;
       }
     }
      
@@ -159,11 +159,9 @@ void loop()
       if ((onTime1 == limit1) || (onTime1 == 0)) dir1 *= -1;
       if ((onTime1 == 0) && (dir1 = 1))
       {
-        limit1 =     random(LIMITMIN1,LIMITMAX1);   // pin-specific brightness values
-        // fadeTimer1 = random(FADEMIN,FADEMAX);
-        // enable1 =    random(0,FADETRUE+1) >= FADEFALSE;
+        limit1 =     random(LIMITMIN1,LIMITMAX1); // pin-specific brightness values
         fadeTimer1 = random(fadeMinDynamic,fadeMaxDynamic);
-        enable1 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;        
+        enable1 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
 
         // fade-cycle completions counter.
         // Only triggers at the end of a full fade cycle when the LED was on.
@@ -184,9 +182,9 @@ void loop()
             fadeTimer0 = random(fadeMinDynamic,fadeMaxDynamic); // Hijack LED0's fade timer just in case it's
                           // in the middle of a really long fade. Replace it with something short. That way it
                           // will coffee too!!!!
-            enable0 = true;      
+            enable0 = true;
             enable1 = true;
-            enable2 = true;      
+            enable2 = true;
             enable3 = true;
             enable4 = true;
           }
@@ -201,7 +199,6 @@ void loop()
             pin1FadeCycleCompletionCount = 0;
             fastModeCycleCountTrigger = random(FASTMODECYCLETRIGGERMIN, FASTMODECYCLETRIGGERMAX); // After how many loops will fast mode trigger again?
           }
-
         }
       }
     }
@@ -221,8 +218,7 @@ void loop()
       {
         limit2 =     random(LIMITMIN,LIMITMAX);
         fadeTimer2 = random(fadeMinDynamic,fadeMaxDynamic);
-        enable2 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;        
-
+        enable2 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
       }
     }
   
@@ -241,8 +237,7 @@ void loop()
       {
         limit3 =     random(LIMITMIN,LIMITMAX);
         fadeTimer3 = random(fadeMinDynamic,fadeMaxDynamic);
-        enable3 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;        
-
+        enable3 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
       }
     }
 
