@@ -71,6 +71,9 @@ boolean celebrate = false; // Are we celebrating right now?
 int celebrationRoll = 0;  // Holds the magic number to match for celebrations.
 
 
+const int numberOfLEDs = 5;
+int fadeTimer[numberOfLEDs] = { 10, 10, 10, 10, 10 };
+
 long delayTime = 50; 
 long startTime = 0;
 
@@ -137,11 +140,11 @@ void loop()
       celebrate = true;
       waitingToCelebrate = false;
 
-      fadeTimer0 = 500; // Set every LED to have a very slow next fade.
-      fadeTimer1 = 500; 
-      fadeTimer2 = 500; 
-      fadeTimer3 = 500; 
-      fadeTimer4 = 500;
+      fadeTimer[0] = 500; // Set every LED to have a very slow next fade.
+      fadeTimer[1] = 500; 
+      fadeTimer[2] = 500; 
+      fadeTimer[3] = 500; 
+      fadeTimer[4] = 500;
       // Reset all counters so that everyone fades from the start.
       onTime0 = 0;		// reset pwm counter.
       onTime1 = 0;
@@ -184,7 +187,7 @@ void loop()
     onCounter0++;
     fadeCounter0++;
 
-    if (fadeCounter0 == fadeTimer0)
+    if (fadeCounter0 == fadeTimer[0])
     {
       fadeCounter0 = 0;
       onTime0 += dir0;
@@ -193,7 +196,7 @@ void loop()
       if ((onTime0 == 0) && (dir0 = 1))
       {
         limit0 =     random(LIMITMIN0,LIMITMAX0); // pin-specific brightness values
-        fadeTimer0 = random(fadeMinDynamic0,fadeMaxDynamic0); // pin specific dynamic-fade speed variables
+        fadeTimer[0] = random(fadeMinDynamic0,fadeMaxDynamic0); // pin specific dynamic-fade speed variables
         
         if (waitingToCelebrate) {
           enable0 = false;
@@ -216,7 +219,7 @@ void loop()
     else                           digitalWrite(LED1, HIGH);
     onCounter1++;
     fadeCounter1++;
-    if (fadeCounter1 == fadeTimer1)
+    if (fadeCounter1 == fadeTimer[1])
     {
       fadeCounter1 = 0;
       onTime1 += dir1;
@@ -224,7 +227,7 @@ void loop()
       if ((onTime1 == 0) && (dir1 = 1))
       {
         limit1 =     random(LIMITMIN1,LIMITMAX1); // pin-specific brightness values
-        fadeTimer1 = random(fadeMinDynamic,fadeMaxDynamic);
+        fadeTimer[1] = random(fadeMinDynamic,fadeMaxDynamic);
 
 
         if (waitingToCelebrate) {
@@ -256,7 +259,7 @@ void loop()
             fadeMaxDynamic0 = FADEMAXFAST;
             fadeFalseDynamic0 = FADEFALSEFAST;  // pin-specific dynamic dice roll
             fadeTrueDynamic0 = FADETRUEFAST;
-            fadeTimer0 = random(fadeMinDynamic,fadeMaxDynamic); // Hijack LED0's fade timer just in case it's
+            fadeTimer[0] = random(fadeMinDynamic,fadeMaxDynamic); // Hijack LED0's fade timer just in case it's
                           // in the middle of a really long fade. Replace it with something short. That way it
                           // will coffee too!!!!
             enable0 = true;
@@ -293,7 +296,7 @@ void loop()
     else                           digitalWrite(LED2, HIGH);
     onCounter2++;
     fadeCounter2++;
-    if (fadeCounter2 == fadeTimer2)
+    if (fadeCounter2 == fadeTimer[2])
     {
       fadeCounter2 = 0;
       onTime2 += dir2;
@@ -301,7 +304,7 @@ void loop()
       if ((onTime2 == 0) && (dir2 = 1))
       {
         limit2 =     random(LIMITMIN,LIMITMAX);
-        fadeTimer2 = random(fadeMinDynamic,fadeMaxDynamic);
+        fadeTimer[2] = random(fadeMinDynamic,fadeMaxDynamic);
 
         if (waitingToCelebrate) {
           enable2 = false;
@@ -330,7 +333,7 @@ void loop()
       if ((onTime3 == 0) && (dir3 = 1))
       {
         limit3 =     random(LIMITMIN,LIMITMAX);
-        fadeTimer3 = random(fadeMinDynamic,fadeMaxDynamic);
+        fadeTimer[3] = random(fadeMinDynamic,fadeMaxDynamic);
 
         if (waitingToCelebrate) {
           enable3 = false;
@@ -351,7 +354,7 @@ void loop()
     else                           digitalWrite(LED4, HIGH);
     onCounter4++;
     fadeCounter4++;
-    if (fadeCounter4 == fadeTimer4)
+    if (fadeCounter4 == fadeTimer[4])
     {
       fadeCounter4 = 0;
       onTime4 += dir4;
@@ -359,7 +362,7 @@ void loop()
       if ((onTime4 == 0) && (dir4 = 1))
       {
         limit4 =     random(LIMITMIN,LIMITMAX);
-        fadeTimer4 = random(fadeMinDynamic,fadeMaxDynamic);
+        fadeTimer[4] = random(fadeMinDynamic,fadeMaxDynamic);
 
         if (waitingToCelebrate) {
           enable4 = false;
