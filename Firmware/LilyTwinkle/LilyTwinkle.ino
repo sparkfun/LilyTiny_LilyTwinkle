@@ -237,14 +237,6 @@ void loop()
           enable1 = random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
         }
 
-
-        // if (!waitingToCelebrate) { 
-        //   // As long as we're not waiting to celebrate, roll another dice.
-          
-        // } else {
-        //   enable1 = false;
-        // }
-
         // fade-cycle completions counter.
         // Only triggers at the end of a full fade cycle when the LED was on.
         if (enable1) {
@@ -311,12 +303,6 @@ void loop()
         limit2 =     random(LIMITMIN,LIMITMAX);
         fadeTimer2 = random(fadeMinDynamic,fadeMaxDynamic);
 
-        // if (!waitingToCelebrate) { 
-        //   enable2 =  random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
-        // } else {
-        //   enable2 = false;
-        // }
-
         if (waitingToCelebrate) {
           enable2 = false;
         }
@@ -346,11 +332,6 @@ void loop()
         limit3 =     random(LIMITMIN,LIMITMAX);
         fadeTimer3 = random(fadeMinDynamic,fadeMaxDynamic);
 
-        // if (!waitingToCelebrate) { 
-        //   enable3 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
-        // } else {
-        //   enable3 = false;
-        // }
         if (waitingToCelebrate) {
           enable3 = false;
         }
@@ -380,11 +361,6 @@ void loop()
         limit4 =     random(LIMITMIN,LIMITMAX);
         fadeTimer4 = random(fadeMinDynamic,fadeMaxDynamic);
 
-        // if (!waitingToCelebrate) { 
-        //   enable4 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
-        // } else {
-        //   enable4 = false;
-        // }
         if (waitingToCelebrate) {
           enable4 = false;
         }
