@@ -59,11 +59,17 @@ int fadeTrueDynamic0 = FADETRUE0;
 
 // After how many fade cycles will the first fast mode trigger?
 int fastModeCycleCountTrigger = random(3,5); // Make sure fast mode triggers quickly the first time after opening the box.
-
+int fastMode = false; // Are we in fast mode?
 // End fast mode -----------------------------------------
 
 // Variables for fade cycle counter. Allows an event to trigger after x fade cycles
 int pin1FadeCycleCompletionCount = 0;
+
+// Variables for celebration fade.
+boolean waitingToCelebrate = false; // Are we waiting to celebrate?
+boolean celebrate = false; // Are we celebrating right now?
+int celebrationRoll = 0;  // Holds the magic number to match for celebrations.
+
 
 long delayTime = 50; 
 long startTime = 0;
@@ -125,7 +131,53 @@ void loop()
   if ( (currTime - startTime) > delayTime)
   {
     startTime = currTime;
-    if (!enable0)                   digitalWrite(LED0, LOW);
+
+    // Check to see if we're waiting to celebrate, and if everyone has arrived.
+    if ((waitingToCelebrate) && (enable0 == false) && (enable1 == false) && (enable2 == false) && (enable3 == false) && (enable4 == false)) {
+      celebrate = true;
+      waitingToCelebrate = false;
+
+      fadeTimer0 = 500; // Set every LED to have a very slow next fade.
+      fadeTimer1 = 500; 
+      fadeTimer2 = 500; 
+      fadeTimer3 = 500; 
+      fadeTimer4 = 500;
+      // Reset all counters so that everyone fades from the start.
+      onTime0 = 0;		// reset pwm counter.
+      onTime1 = 0;
+      onTime2 = 0;
+      onTime3 = 0;
+      onTime4 = 0;
+      onCounter0 = 0;		// Say we've been on for 0 time.
+      onCounter1 = 0;
+      onCounter2 = 0;
+      onCounter3 = 0;
+      onCounter4 = 0;
+      fadeCounter0 = 0;	// Say we've been PWMing for no time
+      fadeCounter1 = 0;
+      fadeCounter2 = 0;
+      fadeCounter3 = 0;
+      fadeCounter4 = 0;
+      dir0 = 1;	// Ensures the celebration fade direction is up.
+      dir1 = 1;
+      dir2 = 1;
+      dir3 = 1;
+      dir4 = 1;
+      limit0 = 255; // Celebration fade can reach max brightness
+      limit1 = 255;
+      limit2 = 255;
+      limit3 = 255;
+      limit4 = 255;
+
+      enable0 = true; // Everyone START CELEBRATING!!!!!!!!!!!!!
+      enable1 = true;
+      enable2 = true;
+      enable3 = true;
+      enable4 = true;
+    }
+    
+    // LED0 section
+    if (!enable0)                  digitalWrite(LED0, LOW);
     else if (onCounter0 > onTime0) digitalWrite(LED0, LOW);
     else                           digitalWrite(LED0, HIGH);
 
@@ -142,7 +194,19 @@ void loop()
       {
         limit0 =     random(LIMITMIN0,LIMITMAX0); // pin-specific brightness values
         fadeTimer0 = random(fadeMinDynamic0,fadeMaxDynamic0); // pin specific dynamic-fade speed variables
-        enable0 =  random(0,fadeTrueDynamic0+1) >= fadeFalseDynamic0;
+        
+        if (waitingToCelebrate) {
+          enable0 = false;
+        }
+        else if (fastMode) {
+          enable0 = true;
+        } 
+        else {
+          // As long as we're not waiting to celebrate,
+          // and it's not fast mode,
+          // then roll another dice.
+          enable0 =  random(0,fadeTrueDynamic0+1) >= fadeFalseDynamic0;
+        }
       }
     }
      
@@ -161,12 +225,33 @@ void loop()
       {
         limit1 =     random(LIMITMIN1,LIMITMAX1); // pin-specific brightness values
         fadeTimer1 = random(fadeMinDynamic,fadeMaxDynamic);
-        enable1 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+
+
+        if (waitingToCelebrate) {
+          enable1 = false;
+        }
+        else if (fastMode) {
+          enable1 = true;
+        } 
+        else {
+          enable1 = random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+        }
+
+
+        // if (!waitingToCelebrate) { 
+        //   // As long as we're not waiting to celebrate, roll another dice.
+          
+        // } else {
+        //   enable1 = false;
+        // }
 
         // fade-cycle completions counter.
         // Only triggers at the end of a full fade cycle when the LED was on.
         if (enable1) {
-          pin1FadeCycleCompletionCount++;
+
+          // If we're celebrating then don't bother drinking any coffee.
+          if ((!celebrate) && (!waitingToCelebrate)) {
+            pin1FadeCycleCompletionCount++;
 
             if (pin1FadeCycleCompletionCount == fastModeCycleCountTrigger) {
             // ON THE nth FADE
@@ -187,18 +272,25 @@ void loop()
             enable2 = true;
             enable3 = true;
             enable4 = true;
+            }
+            if (pin1FadeCycleCompletionCount == 11) {
+              // Uh oh coffee has worn off eveyrone is sleepy.
+              fadeTrueDynamic = FADETRUE;
+              fadeFalseDynamic = FADEFALSE;
+              fadeMinDynamic = FADEMIN;
+              fadeMaxDynamic = FADEMAX;
+              fadeMinDynamic0 = FADEMIN0; // pin-specific dynamic fade speed variable
+              fadeMaxDynamic0 = FADEMAX0;
+              pin1FadeCycleCompletionCount = 0;
+              fastModeCycleCountTrigger = random(FASTMODECYCLETRIGGERMIN, FASTMODECYCLETRIGGERMAX); // After how many loops will fast mode trigger again?
+            }
           }
-          if (pin1FadeCycleCompletionCount == 11) {
-            // Uh oh coffee has worn off eveyrone is sleepy.
-            fadeTrueDynamic = FADETRUE;
-            fadeFalseDynamic = FADEFALSE;
-            fadeMinDynamic = FADEMIN;
-            fadeMaxDynamic = FADEMAX;
-            fadeMinDynamic0 = FADEMIN0; // pin-specific dynamic fade speed variable
-            fadeMaxDynamic0 = FADEMAX0;
-            pin1FadeCycleCompletionCount = 0;
-            fastModeCycleCountTrigger = random(FASTMODECYCLETRIGGERMIN, FASTMODECYCLETRIGGERMAX); // After how many loops will fast mode trigger again?
-          }
+        }
+        // After every fade cycle, increment celebration dice roll
+        celebrationRoll++;
+        // Now we celebrate
+        if (celebrationRoll == 25) {
+          waitingToCelebrate = true; // Inform everyone to gather for the celebration!
         }
       }
     }
@@ -218,7 +310,23 @@ void loop()
       {
         limit2 =     random(LIMITMIN,LIMITMAX);
         fadeTimer2 = random(fadeMinDynamic,fadeMaxDynamic);
-        enable2 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+
+        // if (!waitingToCelebrate) { 
+        //   enable2 =  random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+        // } else {
+        //   enable2 = false;
+        // }
+
+        if (waitingToCelebrate) {
+          enable2 = false;
+        }
+        else if (fastMode) {
+          enable2 = true;
+        } 
+        else {
+          enable2 =  random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+        }
+        
       }
     }
   
@@ -237,7 +345,22 @@ void loop()
       {
         limit3 =     random(LIMITMIN,LIMITMAX);
         fadeTimer3 = random(fadeMinDynamic,fadeMaxDynamic);
-        enable3 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+
+        // if (!waitingToCelebrate) { 
+        //   enable3 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+        // } else {
+        //   enable3 = false;
+        // }
+        if (waitingToCelebrate) {
+          enable3 = false;
+        }
+        else if (fastMode) {
+          enable3 = true;
+        } 
+        else {
+          enable3 = random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+        }
+        
       }
     }
 
@@ -256,7 +379,22 @@ void loop()
       {
         limit4 =     random(LIMITMIN,LIMITMAX);
         fadeTimer4 = random(fadeMinDynamic,fadeMaxDynamic);
-        enable4 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+
+        // if (!waitingToCelebrate) { 
+        //   enable4 =    random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+        // } else {
+        //   enable4 = false;
+        // }
+        if (waitingToCelebrate) {
+          enable4 = false;
+        }
+        else if (fastMode) {
+          enable4 = true;
+        } 
+        else {
+          enable4 = random(0,fadeTrueDynamic+1) >= fadeFalseDynamic;
+        }
+        
       }
     }
   }
