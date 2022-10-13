@@ -144,14 +144,9 @@ void loop()
       byte i;
       for (i = 0; i < numberOfLEDs; i++) {
         fadeTimer[i] = 500; // Set every LED to have a very slow next fade.
+        onTime[i] = 0;  // reset pwm counter.
       }
 
-      // Reset all counters so that everyone fades from the start.
-      onTime0 = 0;		// reset pwm counter.
-      onTime1 = 0;
-      onTime2 = 0;
-      onTime3 = 0;
-      onTime4 = 0;
       onCounter0 = 0;		// Say we've been on for 0 time.
       onCounter1 = 0;
       onCounter2 = 0;
