@@ -73,6 +73,7 @@ int celebrationRoll = 0;  // Holds the magic number to match for celebrations.
 
 const int numberOfLEDs = 5;
 int fadeTimer[numberOfLEDs] = { 10, 10, 10, 10, 10 };
+byte onTime[numberOfLEDs] = { 0, 0, 0, 0, 0 };
 
 long delayTime = 50; 
 long startTime = 0;
@@ -140,6 +141,7 @@ void loop()
       celebrate = true;
       waitingToCelebrate = false;
 
+      byte i;
       for (i = 0; i < numberOfLEDs; i++) {
         fadeTimer[i] = 500; // Set every LED to have a very slow next fade.
       }
@@ -180,7 +182,7 @@ void loop()
     
     // LED0 section
     if (!enable0)                  digitalWrite(LED0, LOW);
-    else if (onCounter0 > onTime0) digitalWrite(LED0, LOW);
+    else if (onCounter0 > onTime[0]) digitalWrite(LED0, LOW);
     else                           digitalWrite(LED0, HIGH);
 
     onCounter0++;
@@ -189,10 +191,10 @@ void loop()
     if (fadeCounter0 == fadeTimer[0])
     {
       fadeCounter0 = 0;
-      onTime0 += dir0;
+      onTime[0] += dir0;
       
-      if ((onTime0 == limit0) || (onTime0 == 0)) dir0 *= -1;
-      if ((onTime0 == 0) && (dir0 = 1))
+      if ((onTime[0] == limit0) || (onTime0 == 0)) dir0 *= -1;
+      if ((onTime[0] == 0) && (dir0 = 1))
       {
         limit0 =     random(LIMITMIN0,LIMITMAX0); // pin-specific brightness values
         fadeTimer[0] = random(fadeMinDynamic0,fadeMaxDynamic0); // pin specific dynamic-fade speed variables
@@ -214,16 +216,16 @@ void loop()
      
   //  LED1 section-----------------------------------------------------------------
     if (!enable1)                   digitalWrite(LED1, LOW);
-    else if (onCounter1 > onTime1) digitalWrite(LED1, LOW);
+    else if (onCounter1 > onTime[1]) digitalWrite(LED1, LOW);
     else                           digitalWrite(LED1, HIGH);
     onCounter1++;
     fadeCounter1++;
     if (fadeCounter1 == fadeTimer[1])
     {
       fadeCounter1 = 0;
-      onTime1 += dir1;
-      if ((onTime1 == limit1) || (onTime1 == 0)) dir1 *= -1;
-      if ((onTime1 == 0) && (dir1 = 1))
+      onTime[1] += dir1;
+      if ((onTime[1] == limit1) || (onTime[1] == 0)) dir1 *= -1;
+      if ((onTime[1] == 0) && (dir1 = 1))
       {
         limit1 =     random(LIMITMIN1,LIMITMAX1); // pin-specific brightness values
         fadeTimer[1] = random(fadeMinDynamic,fadeMaxDynamic);
@@ -291,16 +293,16 @@ void loop()
 
   //  LED2 section-----------------------------------------------------------------
     if (!enable2)                   digitalWrite(LED2, LOW);
-    else if (onCounter2 > onTime2) digitalWrite(LED2, LOW);
+    else if (onCounter2 > onTime[2]) digitalWrite(LED2, LOW);
     else                           digitalWrite(LED2, HIGH);
     onCounter2++;
     fadeCounter2++;
     if (fadeCounter2 == fadeTimer[2])
     {
       fadeCounter2 = 0;
-      onTime2 += dir2;
-      if ((onTime2 == limit2) || (onTime2 == 0)) dir2 *= -1;
-      if ((onTime2 == 0) && (dir2 = 1))
+      onTime[2] += dir2;
+      if ((onTime[2] == limit2) || (onTime[2] == 0)) dir2 *= -1;
+      if ((onTime[2] == 0) && (dir2 = 1))
       {
         limit2 =     random(LIMITMIN,LIMITMAX);
         fadeTimer[2] = random(fadeMinDynamic,fadeMaxDynamic);
@@ -320,16 +322,16 @@ void loop()
   
   //  LED3 section-----------------------------------------------------------------
     if (!enable3)                   digitalWrite(LED3, LOW);
-    else if (onCounter3 > onTime3) digitalWrite(LED3, LOW);
+    else if (onCounter3 > onTime[3]) digitalWrite(LED3, LOW);
     else                           digitalWrite(LED3, HIGH);
     onCounter3++;
     fadeCounter3++;
     if (fadeCounter3 == fadeTimer3)
     {
       fadeCounter3 = 0;
-      onTime3 += dir3;
-      if ((onTime3 == limit3) || (onTime3 == 0)) dir3 *= -1;
-      if ((onTime3 == 0) && (dir3 = 1))
+      onTime[3] += dir3;
+      if ((onTime[3] == limit3) || (onTime[3] == 0)) dir3 *= -1;
+      if ((onTime[3] == 0) && (dir3 = 1))
       {
         limit3 =     random(LIMITMIN,LIMITMAX);
         fadeTimer[3] = random(fadeMinDynamic,fadeMaxDynamic);
@@ -349,16 +351,16 @@ void loop()
 
   //  LED4 section-----------------------------------------------------------------
     if (!enable4)                   digitalWrite(LED4, LOW);
-    else if (onCounter4 > onTime4) digitalWrite(LED4, LOW);
+    else if (onCounter4 > onTime[4]) digitalWrite(LED4, LOW);
     else                           digitalWrite(LED4, HIGH);
     onCounter4++;
     fadeCounter4++;
     if (fadeCounter4 == fadeTimer[4])
     {
       fadeCounter4 = 0;
-      onTime4 += dir4;
-      if ((onTime4 == limit4) || (onTime4 == 0)) dir4 *= -1;
-      if ((onTime4 == 0) && (dir4 = 1))
+      onTime[4] += dir4;
+      if ((onTime[4] == limit4) || (onTime[4] == 0)) dir4 *= -1;
+      if ((onTime[4] == 0) && (dir4 = 1))
       {
         limit4 =     random(LIMITMIN,LIMITMAX);
         fadeTimer[4] = random(fadeMinDynamic,fadeMaxDynamic);
