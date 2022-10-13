@@ -140,11 +140,10 @@ void loop()
       celebrate = true;
       waitingToCelebrate = false;
 
-      fadeTimer[0] = 500; // Set every LED to have a very slow next fade.
-      fadeTimer[1] = 500; 
-      fadeTimer[2] = 500; 
-      fadeTimer[3] = 500; 
-      fadeTimer[4] = 500;
+      for (i = 0; i < numberOfLEDs; i++) {
+        fadeTimer[i] = 500; // Set every LED to have a very slow next fade.
+      }
+
       // Reset all counters so that everyone fades from the start.
       onTime0 = 0;		// reset pwm counter.
       onTime1 = 0;
