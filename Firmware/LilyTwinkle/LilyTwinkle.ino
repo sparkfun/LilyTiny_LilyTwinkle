@@ -100,7 +100,7 @@ void loop() {
     startTime = currTime;
 
     // Check to see if we're waiting to celebrate, and if everyone has arrived.
-    if ((waitingToCelebrate) && (enable[0] == false) && (enable[1] == false) && (enable[2] == false) && (enable[3] == false) && (enable[4] == false)) {
+    if ((waitingToCelebrate) && (!enable[0]) && (!enable[1]) && (!enable[2]) && (!enable[3]) && (!enable[4])) {
       celebrate = true;
       waitingToCelebrate = false;
 
