@@ -1,7 +1,7 @@
 LilyTiny / LilyTwinkle
 ======================
 
-[![LilyTiny / LilyTwinkle](https://dlnmh9ip6v2uc.cloudfront.net/images/products/1/0/8/9/9/10899-01_i_ma.jpg)  
+[![LilyTiny / LilyTwinkle](https://cdn.sparkfun.com/assets/parts/5/9/9/7/11364-Twinkie-01.jpg)  
 *LilyTiny (DEV-10899)*](https://www.sparkfun.com/products/10899) / [*LilyTwinkle (DEV-11364)*](https://www.sparkfun.com/products/11364)
 
 LilyTiny and LilyTwinkle are ATtiny85-based development boards for eTextiles applications. Due to the small size of the board and hardware limitations of the processor, they do not have a bootloader like a conventional LilyPad Arduino compatible does. Instead, six pads are available in the center of the back side of the board, allowing it to be reprogrammed with a standard AVR ISP programmer simply by inserting male headers into the end of the programming cable and pressing them against the board.
